@@ -1,0 +1,50 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+      android:name=".MainApplication"
+      android:label="@string/app_name"
+      android:icon="@mipmap/ic_launcher"
+      android:roundIcon="@mipmap/ic_launcher_round"
+      android:allowBackup="false"
+      android:theme="@style/AppTheme"
+      android:usesCleartextTraffic="${usesCleartextTraffic}"
+      android:supportsRtl="true">
+      <activity
+        android:name=".MainActivity"
+        android:label="@string/app_name"
+        android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
+        android:launchMode="singleTask"
+        android:windowSoftInputMode="adjustPan"
+        android:exported="true">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+      </activity>
+
+      <!-- Autofill: the unlock + pick-a-login surface, launched by the service. -->
+      <activity
+        android:name=".autofill.VaultAutofillActivity"
+        android:exported="false"
+        android:excludeFromRecents="true"
+        android:launchMode="singleTask"
+        android:windowSoftInputMode="adjustPan"
+        android:theme="@style/AppTheme" />
+
+      <!-- Autofill framework service (apps + browsers). -->
+      <service
+        android:name=".autofill.VaultAutofillService"
+        android:label="@string/app_name"
+        android:permission="android.permission.BIND_AUTOFILL_SERVICE"
+        android:exported="true">
+        <intent-filter>
+          <action android:name="android.service.autofill.AutofillService" />
+        </intent-filter>
+        <meta-data
+          android:name="android.autofill"
+          android:resource="@xml/autofill_service" />
+      </service>
+    </application>
+</manifest>
